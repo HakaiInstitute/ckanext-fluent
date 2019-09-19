@@ -1,6 +1,12 @@
 {% import 'macros/form.html' as form %}
 
 {%- for lang in h.fluent_form_languages(field, entity_type, object_type, schema) -%}
+
+  {% set lang_attrs = field.form_attrs if 'form_attrs' in field else {} %}
+  {% if field.slug_lang is defined and lang|lower not in field.slug_lang|lower %}
+    {% set lang_attrs = {} %}
+  {% endif %}
+
   {% call form.input(
     field.field_name + '-' + lang,
     id='field-' + field.field_name + '-' + lang,
@@ -10,7 +16,7 @@
         or data.get(field.field_name, {})[lang],
     error=errors[field.field_name + '-' + lang],
     classes=['control-medium'],
-    attrs=field.form_attrs if 'form_attrs' in field else {},
+    attrs=lang_attrs,
     is_required=h.scheming_field_required(field)
     ) %}
     {%- snippet 'scheming/form_snippets/fluent_help_text.html',
