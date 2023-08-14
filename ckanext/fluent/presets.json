@@ -33,7 +33,8 @@
         "output_validators": "fluent_tags_output",
         "form_attrs": {
           "data-module": "autocomplete",
-          "data-module-tags": ""
+          "data-module-tags": "",
+          "data-module-source": "/api/2/util/tag/autocomplete?incomplete=?"
         }
       }
     },
